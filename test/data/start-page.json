@@ -1,0 +1,44 @@
+{
+  "fileName": "start-page",
+  "layout": "test/templates/layouts/default-layout.html",
+  "model": {
+    "lang": "en",
+    "meta": {
+      "pageTitle": "test page title"
+    },
+    "nav": [
+      { "title": "Home", "permalink": "/" },
+      { "title": "About", "permalink": "/about" },
+      { "title": "Contact", "permalink": "/contact" }
+    ],
+    "page": {
+      "location": "test/templates/pages/standard-page.html",
+      "model": {
+        "pageTitle": "Standard page",
+        "preamble": "This is the preamble.",
+        "content": [
+          {
+            "partial": "hero",
+            "model": {
+              "title": "Hero title",
+              "image-src": "/img.jpg",
+              "lead": "Hero lead text",
+              "url": "/hero-link"
+            }
+          },
+          {
+            "partial": "product-list",
+            "model": [
+              { "url": "/product/1", "name": "Product 1" },
+              { "url": "/product/2", "name": "Product 2" },
+              { "url": "/product/3", "name": "Product 3" }
+            ]
+          }
+        ]
+      }
+    },
+    "footer": {
+      "copyright": "copyright alexander darland @ 2015"
+    }
+  }
+}
