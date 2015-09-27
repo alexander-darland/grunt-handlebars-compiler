@@ -1,5 +1,5 @@
 # grunt-handlebars-compiler
-Handlebars compiler, combined with js-beautify's html module.
+This grunt task uses Handlebars to compile templates based on a json model structure and formatted via js-beautify. This lets us create modular html components that can be used and reused in multiple scenarios.
 
 ## Configurations
 Example:
