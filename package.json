@@ -1,23 +1,23 @@
 {
-  "name": "grunt-handlebars-compiler",
+  "name": "grunt-handlebars-page-builder",
   "description": "Compiles handlebar.js templates",
   "version": "0.1.0",
-  "homepage": "https://github.com/alexander.darland/grunt-handlebars-compiler",
+  "homepage": "https://github.com/alexander.darland/grunt-handlebars-page-builder",
   "author": {
-    "name": "alexander.darland",
+    "name": "alexdarland",
     "email": "alexander.darland@stendahls.se"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/alexander.darland/grunt-handlebars-compiler.git"
+    "url": "git://github.com/alexander.darland/grunt-handlebars-page-builder.git"
   },
   "bugs": {
-    "url": "https://github.com/alexander.darland/grunt-handlebars-compiler/issues"
+    "url": "https://github.com/alexander.darland/grunt-handlebars-page-builder/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/alexander.darland/grunt-handlebars-compiler/blob/master/LICENSE-MIT"
+      "url": "https://github.com/alexander.darland/grunt-handlebars-page-builder/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {

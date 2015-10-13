@@ -1,6 +1,6 @@
 /*
- * grunt-handlebars-compiler
- * https://github.com/alexander.darland/grunt-handlebars-compiler
+ * grunt-handlebars-page-builder
+ * https://github.com/alexander.darland/grunt-handlebars-page-builder
  *
  * Copyright (c) 2015 alexander.darland
  * Licensed under the MIT license.
