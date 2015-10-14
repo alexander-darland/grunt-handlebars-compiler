@@ -16,7 +16,8 @@ module.exports = function(grunt) {
             hb = require('handlebars'),
             fs = require('fs'),
             path = require('path'),
-            beautify = require('js-beautify').html;
+            beautify = require('js-beautify').html,
+            globals;
 
         function registerPartialsRecursive(dirPath) {
 
@@ -37,6 +38,63 @@ module.exports = function(grunt) {
             });
 
         }
+
+        function createGlobalObject() {
+
+            globals = {};
+
+            fs.readdirSync(options.globals).forEach(function (child) {
+
+                var childUrl = options.globals + path.sep + child,
+                    stats = fs.statSync(childUrl);
+
+                if (stats.isFile()) {
+                    var partialName = child.replace('.json', ''),
+                        fileJson = grunt.file.readJSON(childUrl, { encoding: 'utf8' });
+
+                    globals[partialName] = fileJson;
+                }
+
+            });
+
+        }
+
+        function fetchGlobalVariable(selectorString) {
+
+            var selectorArray = selectorString.split('.'),
+                currentLevel = globals;
+
+            if (!selectorString) { return "Undefined"; }
+
+            try {
+                selectorArray.forEach(function (selector) {
+                    if (currentLevel[selector]) {
+                        currentLevel = currentLevel[selector];
+                    } else {
+                        console.warn('Could not find language string with selector "' + selectorString + '"');
+                        currentLevel = null;
+                        return false;
+                    }
+                });
+            } catch (err) {
+                currentLevel = null;
+            }
+
+            if (currentLevel) {
+                return currentLevel;
+            }
+
+            return "Not Found";
+
+        }
+
+        hb.registerHelper('globals', function(selector) {
+
+            if(!globals) { createGlobalObject(); }
+
+            return fetchGlobalVariable(selector);
+
+        });
 
         options.templateFolders.forEach(function(templateFolder) {
             registerPartialsRecursive(templateFolder);

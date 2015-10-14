@@ -1,6 +1,7 @@
 <nav>
+    <h1>{{ globals 'lang.brand.logoText' }}</h1>
     <ul class="header-nav">
-    {{#each .}}
+    {{#each (globals 'nav')}}
         <li><a href="{{permalink}}">{{title}}</a></li>
     {{/each}}
     </ul>

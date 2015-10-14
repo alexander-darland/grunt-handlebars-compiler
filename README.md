@@ -44,3 +44,22 @@ The layout is the entry point for your model.
 
 **model**
 This is the model for your views.
+
+## Global variables
+It is possible to specify global variables that handlebars will make accessible through the helper function `globals`. We specify a folder in the options where the global json files are stored. 
+
+```js
+hb_compiler: {
+  dist: {
+    options: {
+      globals: 'global/directory'
+    }
+  }
+}
+```
+
+The task will create an object of all these files, which are available by using the following helper function.
+
+```html
+{{ globals 'filename.property.path' }}
+```

@@ -19,7 +19,8 @@ module.exports = function(grunt) {
     hb_compiler: {
       dist: {
         options: {
-          templateFolders: ['test/templates']
+          templateFolders: ['test/templates'],
+          globals: 'test/data/globals'
         },
         files: {
           'tmp/': ['test/data/start-page.json']
