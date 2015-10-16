@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             fs = require('fs'),
             path = require('path'),
             beautify = require('js-beautify').html,
-            external = require(options.helpers),
+            external,
             globals;
 
         function registerPartialsRecursive(dirPath) {
@@ -107,21 +107,21 @@ module.exports = function(grunt) {
 
         });
 
-        registerExternalHelpers();
+        if(options.helpers) {
+            external = require(options.helpers);
+            registerExternalHelpers();
+        }
 
         options.templateFolders.forEach(function(templateFolder) {
             registerPartialsRecursive(templateFolder);
         });
 
-        console.log(globals);
-
         this.files.forEach(function(file) {
 
             var src =       grunt.file.readJSON(file.src, { encoding: 'utf8' }),
                 tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
-                template =  hb.compile(tmp);
-
-            var markup =    template(src.model),
+                template =  hb.compile(tmp),
+                markup =    template(src.model),
                 dest =      file.dest + src.fileName + '.html',
                 beautifyOptions = {
 
