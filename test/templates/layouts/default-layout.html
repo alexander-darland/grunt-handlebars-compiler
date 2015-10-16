@@ -8,6 +8,9 @@
     {{> nav nav }}
     </header>
     <main>
+        {{#equal 'a' 'b'}}<h1>Are Equal</h1>{{else}}<h1>Are Not Equal</h1>{{/equal}}
+        {{#equal 'a' 'a'}}<h1>Are Equal</h1>{{else}}<h1>Are Not Equal</h1>{{/equal}}
+
         {{#each content}}
         {{> (lookup . 'view') model }}
         {{/each}}

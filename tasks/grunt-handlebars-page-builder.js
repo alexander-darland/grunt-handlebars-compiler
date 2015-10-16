@@ -10,13 +10,14 @@
 
 module.exports = function(grunt) {
 
-    grunt.registerMultiTask('hb_compiler', 'Compiles handlebar.js templates.', function() {
+    grunt.registerMultiTask('hb_page_builder', 'Build static html pages with handlebar.js templates.', function() {
 
         var options = this.options(),
             hb = require('handlebars'),
             fs = require('fs'),
             path = require('path'),
             beautify = require('js-beautify').html,
+            external = require(options.helpers),
             globals;
 
         function registerPartialsRecursive(dirPath) {
@@ -43,9 +44,9 @@ module.exports = function(grunt) {
 
             globals = {};
 
-            fs.readdirSync(options.globals).forEach(function (child) {
+            fs.readdirSync(options.globalsFolder).forEach(function (child) {
 
-                var childUrl = options.globals + path.sep + child,
+                var childUrl = options.globalsFolder + path.sep + child,
                     stats = fs.statSync(childUrl);
 
                 if (stats.isFile()) {
@@ -88,6 +89,16 @@ module.exports = function(grunt) {
 
         }
 
+        function registerExternalHelpers() {
+
+            external.helpers.forEach(function(self) {
+
+                hb.registerHelper(self.name, self.func);
+
+            });
+
+        }
+
         hb.registerHelper('globals', function(selector) {
 
             if(!globals) { createGlobalObject(); }
@@ -96,16 +107,21 @@ module.exports = function(grunt) {
 
         });
 
+        registerExternalHelpers();
+
         options.templateFolders.forEach(function(templateFolder) {
             registerPartialsRecursive(templateFolder);
         });
+
+        console.log(globals);
 
         this.files.forEach(function(file) {
 
             var src =       grunt.file.readJSON(file.src, { encoding: 'utf8' }),
                 tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
-                template =  hb.compile(tmp),
-                markup =    template(src.model),
+                template =  hb.compile(tmp);
+
+            var markup =    template(src.model),
                 dest =      file.dest + src.fileName + '.html',
                 beautifyOptions = {
 

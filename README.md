@@ -5,7 +5,7 @@ This grunt task uses Handlebars to compile templates based on a json model struc
 Example:
 
 ```js
-hb_compiler: {
+hb_page_builder: {
   dist: {
     options: {
       templateFolders: ['test/templates']
@@ -49,7 +49,7 @@ This is the model for your views.
 It is possible to specify global variables that handlebars will make accessible through the helper function `globals`. We specify a folder in the options where the global json files are stored. 
 
 ```js
-hb_compiler: {
+hb_page_builder: {
   dist: {
     options: {
       globals: 'global/directory'
@@ -62,4 +62,39 @@ The task will create an object of all these files, which are available by using 
 
 ```html
 {{ globals 'filename.property.path' }}
+```
+
+## Helpers
+If you're familiar with Handlebars, you will know just hw powerful helper functions are. You can inject your own helper functions by adding a filepath to the options... 
+
+```js
+hb_page_builder: {
+  dist: {
+    options: {
+      helpers: './../test/data/helpers/helpers.js'
+    }
+  }
+}
+```
+The contents of this file should be a node module, exposing an array called helpers. The helpers array should contain objects with 2 properties: "name" and "func". 
+
+```js
+"use strict";
+
+exports.helpers = [
+
+    {
+        name: 'equal',
+        func: function(lvalue, rvalue, options) {
+            if (arguments.length < 3)
+                throw new Error("Handlebars Helper equal needs 2 parameters");
+            if( lvalue!=rvalue ) {
+                return options.inverse(this);
+            } else {
+                return options.fn(this);
+            }
+        }
+    }
+
+];
 ```
