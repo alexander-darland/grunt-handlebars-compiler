@@ -1,7 +1,7 @@
 {
   "name": "grunt-handlebars-page-builder",
   "description": "Compiles handlebar.js templates",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "homepage": "https://github.com/alexander.darland/grunt-handlebars-page-builder",
   "author": {
     "name": "alexdarland",

@@ -13,6 +13,8 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('hb_page_builder', 'Build static html pages with handlebar.js templates.', function() {
 
         var options = this.options(),
+            pf = this.data.pageFolder,
+            tf = this.data.targetFolder,
             hb = require('handlebars'),
             fs = require('fs'),
             path = require('path'),
@@ -99,6 +101,35 @@ module.exports = function(grunt) {
 
         }
 
+        function createPagesRecursive(pageFolder, targetFolder) {
+
+            fs.readdirSync(pageFolder).forEach(function (child) {
+
+                var childUrl = pageFolder + path.sep + child,
+                    stats = fs.statSync(childUrl);
+
+                if (stats.isDirectory()) {
+                    createPagesRecursive(childUrl, targetFolder);
+                }
+                else if (stats.isFile() && path.extname(childUrl) == '.json') {
+
+                    var src =       grunt.file.readJSON(childUrl, { encoding: 'utf8' }),
+                        tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
+                        template =  hb.compile(tmp),
+                        markup =    template(src.model),
+                        dest =      tf + path.relative(pf, childUrl).replace('.json', '.html'),
+                        beautifyOptions = {
+
+                        };
+
+                    grunt.file.write(dest, beautify(markup, beautifyOptions));
+
+                }
+
+            });
+
+        }
+
         hb.registerHelper('globals', function(selector) {
 
             if(!globals) { createGlobalObject(); }
@@ -108,7 +139,8 @@ module.exports = function(grunt) {
         });
 
         if(options.helpers) {
-            external = require(options.helpers);
+            var helpersRelativePath = './' + path.relative(__dirname, options.helpers);
+            external = require(helpersRelativePath);
             registerExternalHelpers();
         }
 
@@ -116,20 +148,7 @@ module.exports = function(grunt) {
             registerPartialsRecursive(templateFolder);
         });
 
-        this.files.forEach(function(file) {
-
-            var src =       grunt.file.readJSON(file.src, { encoding: 'utf8' }),
-                tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
-                template =  hb.compile(tmp),
-                markup =    template(src.model),
-                dest =      file.dest + src.fileName + '.html',
-                beautifyOptions = {
-
-                };
-
-            grunt.file.write(dest, beautify(markup, beautifyOptions));
-
-        });
+        createPagesRecursive(pf, tf);
 
     });
 };

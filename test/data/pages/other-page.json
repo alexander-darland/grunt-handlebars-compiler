@@ -1,0 +1,31 @@
+{
+  "fileName": "other-page",
+  "layout": "test/templates/layouts/default-layout.html",
+  "model": {
+    "lang": "en",
+    "meta": {
+      "pageTitle": "test page title"
+    },
+    "nav": [
+      { "title": "Home", "permalink": "/" },
+      { "title": "About", "permalink": "/about" },
+      { "title": "Contact", "permalink": "/contact" }
+    ],
+
+    "content": [
+      {
+        "view": "standard-page",
+        "model": {
+          "pageTitle": "Standard page",
+          "preamble": "This is the preamble.",
+          "content": [
+
+          ]
+        }
+      }
+    ],
+    "footer": {
+      "copyright": "copyright alexander darland @ 2015"
+    }
+  }
+}

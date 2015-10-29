@@ -17,15 +17,14 @@ module.exports = function(grunt) {
     },
 
     hb_page_builder: {
+      options: {
+        templateFolders: ['test/templates'],
+        globalsFolder: 'test/data/globals',
+        helpers: 'test/data/helpers/helpers.js'
+      },
       dist: {
-        options: {
-          templateFolders: ['test/templates'],
-          globalsFolder: 'test/data/globals',
-          helpers: './../test/data/helpers/helpers.js'
-        },
-        files: {
-          'tmp/': ['test/data/start-page.json']
-        }
+        pageFolder: 'test/data/pages',
+        targetFolder: 'tmp/'
       }
     }
 
