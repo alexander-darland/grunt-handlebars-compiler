@@ -113,16 +113,23 @@ module.exports = function(grunt) {
                 }
                 else if (stats.isFile() && path.extname(childUrl) == '.json') {
 
-                    var src =       grunt.file.readJSON(childUrl, { encoding: 'utf8' }),
-                        tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
-                        template =  hb.compile(tmp),
-                        markup =    template(src.model),
-                        dest =      tf + path.relative(pf, childUrl).replace('.json', '.html'),
-                        beautifyOptions = {
+                    try {
+                        var src =       grunt.file.readJSON(childUrl, { encoding: 'utf8' }),
+                            tmp =       grunt.file.read(src.layout, { encoding: 'utf8' }),
+                            template =  hb.compile(tmp),
+                            markup =    template(src.model),
+                            dest =      tf + path.relative(pf, childUrl).replace('.json', '.html'),
+                            beautifyOptions = {
 
-                        };
+                            };
 
-                    grunt.file.write(dest, beautify(markup, beautifyOptions));
+                        grunt.file.write(dest, beautify(markup, beautifyOptions));
+
+                        console.log('File created:  ' + dest);
+
+                    } catch (error) {
+                        console.log('Error writing file ' + child + '. ' + error.message);
+                    }
 
                 }
 
