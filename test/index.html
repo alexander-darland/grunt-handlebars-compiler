@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ headline }}</title>
+</head>
+<body>
+
+    <h1>{{ headline }}</h1>
+    <p>{{ preamble }}</p>
+    <hr/>
+
+    <h2>List</h2>
+    <ul>
+    {{#each list }}
+        <li><a href="{{ url }}">{{ title }}</a></li>
+    {{/each}}
+    </ul>
+
+</body>
+</html>

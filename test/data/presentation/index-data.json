@@ -1,0 +1,14 @@
+{
+  "headline": "Grunt Handlebars Page Builder",
+  "preamble": "This page is used to present information about the views used in the site. It is optional but can be very useful in creating an overview of your work.",
+  "list": [
+    {
+      "title": "Title 1",
+      "url": "/url-1"
+    },
+    {
+      "title": "Title 2",
+      "url": "/url-2"
+    }
+  ]
+}

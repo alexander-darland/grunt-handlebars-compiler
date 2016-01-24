@@ -128,12 +128,34 @@ module.exports = function(grunt) {
                         console.log('File created:  ' + dest);
 
                     } catch (error) {
-                        console.log('Error writing file ' + child + '. ' + error.message);
+                        console.warn('Error writing file ' + child + ': ' + error.message);
                     }
 
                 }
 
             });
+
+        }
+
+        function createIndexFile() {
+
+            if(!options.index) { return false; }
+
+            try {
+                var data =      grunt.file.readJSON(options.index.data, { encoding: 'utf8' }),
+                    tmp =       grunt.file.read(options.index.view, { encoding: 'utf8' }),
+                    template =  hb.compile(tmp),
+                    markup =    template(data),
+                    dest =      options.index.dist + 'index.html',
+                    beautifyOptions = { };
+
+                grunt.file.write(dest, beautify(markup, beautifyOptions));
+
+                console.log('File created:  ' + dest);
+
+            } catch (error) {
+                console.warn('Error writing index file: ' + error.message);
+            }
 
         }
 
@@ -156,6 +178,8 @@ module.exports = function(grunt) {
         });
 
         createPagesRecursive(pf, tf);
+
+        createIndexFile();
 
     });
 };

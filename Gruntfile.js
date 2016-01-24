@@ -20,11 +20,16 @@ module.exports = function(grunt) {
       options: {
         templateFolders: ['test/templates'],
         globalsFolder: 'test/data/globals',
-        helpers: 'test/data/helpers/helpers.js'
+        helpers: 'test/data/helpers/helpers.js',
+        index: {
+          data: 'test/data/presentation/index-data.json',
+          view: 'test/index.html',
+          dist: 'tmp/'
+        }
       },
       dist: {
         pageFolder: 'test/data/pages',
-        targetFolder: 'tmp/'
+        targetFolder: 'tmp/pages/'
       }
     }
 
